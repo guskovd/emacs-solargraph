@@ -50,4 +50,6 @@
    )
   )
 
+(provide 'solargraph)
+
 ;;; solargraph.el ends here

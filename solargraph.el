@@ -8,6 +8,7 @@
 (require 'request)
 
 (defvar solargraph:port 7657)
+(defvar solargraph:active-callback nil)
 (defvar solargraph:complete-callback-function 'solargraph:complete-callback)
 
 (defun solargraph:complete-callback (collection)
@@ -18,38 +19,39 @@
     (completion-in-region start stop collection)
     ))
 
-(defun solargraph:complete-request (text filename line column)
-  "Get completions (TEXT, FILENAME, LINE, COLUMN)."
-  (request
-   (format "http://localhost:%s/suggest" solargraph:port)
-   :type "POST"
-   :data `(
-	   ("text" . ,text)
-	   ("filename" . ,filename)
-	   ("line" . ,line)
-	   ("column" . ,column)
-	   ("workspace" . "solargraph")
-	   )
-   :parser 'json-read
-   :success (cl-function
-             (lambda (&key data &allow-other-keys)
-               (let* ((sugg-data (assoc-default 'suggestions data))
-		      (cmpls (mapcar (lambda (x) (cdr (elt x 2))) sugg-data))) ;
-		 (funcall solargraph:complete-callback-function cmpls)
-		 ))))
-  )
+(defun solargraph:complete-request (callback)
+  "Get completions (CALLBACK)."
+  (let ((text (buffer-substring (point-min) (point-max)))
+	(filename buffer-file-name)
+	(line (- (count-lines 1 (point)) 1))
+	(column (current-column))
+	(callback callback)
+	)
+    (setq solargraph:active-callback callback)
+    (request
+     (format "http://localhost:%s/suggest" solargraph:port)
+     :type "POST"
+     :data `(
+  	     ("text" . ,text)
+  	     ("filename" . ,filename)
+  	     ("line" . ,line)
+  	     ("column" . ,column)
+  	     ("workspace" . "solargraph")
+  	     )
+     :parser 'json-read
+     :success (cl-function
+               (lambda (&key data &allow-other-keys)
+		 (let* ((sugg-data (assoc-default 'suggestions data))
+  			(cmpls (mapcar (lambda (x) (cdr (elt x 2))) sugg-data))) ;
+  		   (funcall solargraph:active-callback cmpls)
+  		   ))))))
+
 
 (defun solargraph:complete ()
   "Show completions."
   (interactive)
-  (solargraph:complete-request
-   (buffer-substring (point-min) (point-max))
-   buffer-file-name
-   (- (count-lines 1 (point)) 1)
-   (current-column)
-   )
-  )
+  (solargraph:complete-request solargraph:complete-callback-function))
 
-(provide 'solargraph)
+  (provide 'solargraph)
 
 ;;; solargraph.el ends here

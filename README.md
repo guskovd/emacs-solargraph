@@ -27,7 +27,7 @@ basic setup:
 
 Autocomplete setup
 
-```
+```elisp
 (require 'ac-solargraph)
 (define-key ruby-mode-map (kbd "M-i") 'ac-solargraph:complete)
 ```

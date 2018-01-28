@@ -25,4 +25,11 @@ basic setup:
 (define-key ruby-mode-map (kbd "M-i") 'solargraph:complete)
 ```
 
+Autocomplete setup
+
+```
+(require 'ac-solargraph)
+(define-key ruby-mode-map (kbd "M-i") 'ac-solargraph:complete)
+```
+
 Solargraph project: https://github.com/castwide/solargraph

@@ -1,0 +1,7 @@
+/results
+/bin
+.hab.tar
+.bundle
+.kitchen
+.yardoc
+doc

@@ -10,3 +10,4 @@ end
 instance = Solargraph::Sample::HelloClass.new()
 instance.hello
 
+Parser::

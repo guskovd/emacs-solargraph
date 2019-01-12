@@ -21,7 +21,12 @@ pkg_deps=(
     core/git
     core/ruby/$RUBY_VERSION
     core/tar
+    core/gzip
     core/rsync
+    core/make
+    core/gcc
+    core/libxml2
+    core/libxslt
 )
 
 do_shell() {

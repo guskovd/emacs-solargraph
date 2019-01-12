@@ -16,5 +16,5 @@ Gem::Specification.new do |spec|
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = %w(lib)
 
-  spec.add_dependency 'solargraph'
+  # spec.add_dependency 'solargraph'
 end

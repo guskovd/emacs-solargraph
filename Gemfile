@@ -1,6 +1,6 @@
-#!/usr/bin/env ruby
-# -*- coding: utf-8 -*-
+source 'https://rubygems.org'
 
-gem 'solargraph'
+gem 'solargraph', :git => 'https://github.com/castwide/solargraph.git'
+gem 'pry'
 
 gemspec :path => '.', :name => 'solargraph-sample'

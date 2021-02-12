@@ -1,3 +1,7 @@
+# DEPRECATED!
+
+let's use [eglot](https://github.com/joaotavora/eglot) or [lsp-mode](https://github.com/emacs-lsp/lsp-mode)
+
 # emacs-solargraph
 
 Ruby setup
